@@ -1,0 +1,79 @@
+#!/usr/bin/env node
+const app = require('../server');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
+const config = require('../app/config/config');
+let secure = config.HTTPS;
+let publicDir = config.PUBLIC_DIR;
+
+/** Get port from environment and store in Express. */
+
+let port = normalizePort(process.env.PORT || config.PORT);
+app.set("port", port);
+
+if (secure == "off") {
+    nodeServer = http.createServer(app);
+} else {
+    /* ssl certificates */
+    let privateKey = fs.readFileSync("certificate.key");
+    let certificate = fs.readFileSync("certificate.pem");
+    let ca = fs.readFileSync("fullchain.pem")
+
+    let sslConfig = {
+        key: privateKey,
+        cert: certificate,
+        ca: ca,
+    };
+
+    nodeServer = https.createServer(sslConfig, app);
+}
+
+
+/** Listen on provided port, on all network interfaces. */
+nodeServer.listen(port, () => console.log(`API runing on ${port}`));
+nodeServer.on('error', onError);
+
+/** create asset public/directory folder */
+if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir)
+    fs.mkdirSync(`${publicDir}/log`);
+    fs.mkdirSync(`${publicDir}/img`);
+    fs.mkdirSync(`${publicDir}/tmp`);
+    console.log('success make public directory');
+}
+
+
+/** Normalize a port into a number, string, or false. */
+function normalizePort(val) {
+    let port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        return val;
+    }
+    if (port >= 0) {
+        return port;
+    }
+    return false;
+}
+
+function onError(error) {
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+
+    let bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+
+    switch (error.code) {
+         case "EACCES":
+            console.error(bind + " requires elevated privileges");
+            process.exit(1);
+            break;
+        case "EADDRINUSE":
+            console.error(bind + " is already in use");
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+}
