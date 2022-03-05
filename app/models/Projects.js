@@ -29,19 +29,38 @@ module.exports = (sequelize, Sequelize, DataTypes) =>  {
                 type: DataTypes.INTEGER,
                 allowNull: true,
             },
+            code: {
+                type : DataTypes.STRING,  
+            },
+            progress: {
+                type : DataTypes.STRING  
+            },
             title: {
                 type: DataTypes.STRING,
             },
             detail: {
-                type: DataTypes.STRING,
+                type: DataTypes.JSON,
             },
             status : {
                 type: DataTypes.ENUM,
                 values: ['propose', 'final', 'hand', 'close'],
                 default : 'propose'
             },
+            netar_status : {
+                type: DataTypes.ENUM,
+                values: ['needaprove', 'aprove', 'reject'],
+                default : 'needaprove'
+            },
             label: {
                 type : DataTypes.JSON  
+            },
+            type : {
+                type: DataTypes.ENUM,
+                values: ['expand','new'],
+                default : 'expand'
+            },
+            time: {
+                type : DataTypes.DATE  
             },
             created_at: {
                 allowNull: false,

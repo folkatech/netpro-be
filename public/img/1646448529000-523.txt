@@ -1,0 +1,11 @@
+-- json_extrack ---
+SET @json = '[1, 2, [3, 4]]';
+SELECT JSON_EXTRACT(@JSON, '$[2]');
+
+menggunakan json object
+SELECT com.*, GROUP_CONCAT(JSON_OBJECT('location_id', l.id, 'location_name', l.name)) 
+ AS location 
+ FROM zw_com com 
+ JOIN zw_com_location l 
+ ON com.id = l.com_id
+ GROUP BY com.id ;

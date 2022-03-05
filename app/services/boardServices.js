@@ -3,7 +3,9 @@ const Looging = require('../libraries/logging');
 
 async function index(req, res) {
     try {
-        boardData = await db.board.findAll({ where: { active: 1 } });
+       console.log(req.user);
+        role = req.user.role != 'netar' ? 'nonneter' : 'netar';
+        boardData = await db.board.findAll({ where: { active: 1, type : role } });
 
         return res.json({
             success: true,
@@ -59,7 +61,6 @@ async function update(req, res) {
 
 async function destroy(req, res) {
     try {
-
         await db.board.update({
             active: '1',
         }, {

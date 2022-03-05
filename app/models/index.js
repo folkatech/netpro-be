@@ -57,6 +57,7 @@ db.projectsBoard.belongsTo(db.projects, {
 });
 
 
+
 db.projects.belongsTo(db.sto, {
   foreignKey: "sto_id",
   targetKey: "id"
