@@ -20,6 +20,14 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             detail: {
                 type: DataTypes.JSON,
             },
+            status: {
+                type : DataTypes.STRING  
+            },
+            done: {
+               type: DataTypes.ENUM,
+               values: ['1', '0', '2'],
+                default : '0' 
+            },
             created_at: {
                 allowNull: false,
                 type: DataTypes.DATE,

@@ -52,20 +52,17 @@ async function login(req, res) {
     }
 }
 
-
-
-async function register(req, res) {
+async function profile(req, res) {
     try {
-        const payload = req.body;
-        await db.users.create({
-            name: payload.name,
-            email: payload.email,
-            password: crypto.createHash('sha256').update(payload.password).digest('hex'),
-        });
+        let dataUser = await db.users.findOne({
+            where: { id: req.user.id },
+            attributes: ['id', 'name', 'image', 'role'],
+       });
 
         return res.json({
             success: true,
-            message: 'success register',
+            message: 'success get data',
+            data : dataUser
         });
 
     } catch (err) {
@@ -78,6 +75,8 @@ async function register(req, res) {
     }
 }
 
+
+
 module.exports = {
-    login, register
+    login, profile
 }

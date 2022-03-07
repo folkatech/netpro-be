@@ -43,7 +43,7 @@ module.exports = (sequelize, Sequelize, DataTypes) =>  {
             },
             status : {
                 type: DataTypes.ENUM,
-                values: ['propose', 'final', 'hand', 'close'],
+                values: ['propose', 'install','final', 'comptest','hand','close'],
                 default : 'propose'
             },
             netar_status : {
