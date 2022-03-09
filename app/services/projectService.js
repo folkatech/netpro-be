@@ -40,7 +40,7 @@ async function show(req, res) {
         if (req.query.type == 'last') {
             dataProject = await db.projects.findOne({ order: [['created_at', 'DESC']] });
         } else {
-            dataProject = await db.projects.findOne({ id : req.query.project_id, include : db.reports });
+            dataProject = await db.projects.findOne({ where : { id: req.query.project_id }, include : db.reports });
         }
 
         return res.json({
