@@ -141,19 +141,23 @@ async function witel()
                 witel_id: witelId.dataValues.id,
                 active: '1'
             }, {
-                name: 'Expand Modul OTN',
+                name: 'STO Mojosongo',
                 witel_id: witelId.dataValues.id,
                 active: '1',
             }, {
-                name: 'Expand Modul Trunk',
+                name: 'STO Kartasura',
                 witel_id: witelId.dataValues.id,
                 active: '1',
             }, {
-                name: 'Expand Modul Metro',
+                name: 'STO Kerten',
                 witel_id: witelId.dataValues.id,
                 active: '1',
             }, {
-                name: 'Expand Modul Retifier',
+                name: 'STO Palur',
+                witel_id: witelId.dataValues.id,
+                active: '1',
+            },  {
+                name: 'STO Sukoharjo',
                 witel_id: witelId.dataValues.id,
                 active: '1',
             }]).catch((err) => {

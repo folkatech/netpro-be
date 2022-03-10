@@ -1,5 +1,6 @@
 const db = require('../models');
 const logging = require('../libraries/logging');
+const sequelize = require('sequelize');
 
 async function index(req, res) {
     try {
@@ -8,13 +9,14 @@ async function index(req, res) {
                 limit: parseInt(req.query.limit),
                 offset: parseInt(req.query.offset),
                 where: { board_id: req.query.board_id },
-                // attributes: ['id', 'board_id'],
-                include : db.projects
+                include: db.projects,
+                order : [
+                    [sequelize.col('project.time'), 'DESC']]
             });
 
             return res.json({
                 success: true,
-                message: 'success get data',
+                message: 'success get datas',
                 data: data
             });
         } else {
