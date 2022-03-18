@@ -32,6 +32,7 @@ db.sto = require('./Sto')(sequelize, Sequelize, DataTypes);
 db.projects = require('./Projects')(sequelize, Sequelize, DataTypes);
 db.reports = require('./Reports')(sequelize, Sequelize, DataTypes);
 db.asset = require('./Asset')(sequelize, Sequelize, DataTypes);
+db.regional = require('./Regional')(sequelize, Sequelize, DataTypes);
 
 db.users = require('./Users')(sequelize, Sequelize, DataTypes);
 db.projectsBoard = require('./ProjectBoard')(sequelize, Sequelize, DataTypes);
@@ -70,6 +71,11 @@ db.projects.belongsTo(db.witel, {
 
 db.projects.belongsTo(db.expand, {
   foreignKey: "expand_id",
+  targetKey: "id"
+});
+
+db.projects.belongsTo(db.users, {
+  foreignKey: "user_id",
   targetKey: "id"
 });
 

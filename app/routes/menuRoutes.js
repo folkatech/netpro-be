@@ -9,6 +9,9 @@ const uploadData = upload.fields([{ name: 'fileData', maxCount: 1 }]);
 const menuService = require('../services/menuServices');
 const projectService = require('../services/projectService');
 const reportService = require('../services/reportServices');
+const assetService = require('../services/assetServices');
+const witelService = require('../services/witelServices');
+const regionalService = require('../services/regionalServices');
 
 router.post('/upload', uploadData, authApp, menuService.uploadFile);
 router.get('/project', authApp, projectService.index);
@@ -16,5 +19,15 @@ router.get('/project/show', authApp, projectService.show);
 router.post('/project', authApp, projectService.store);
 router.post('/aprove', authApp, projectService.aprove);
 router.post('/report', authApp, reportService.store);
+router.post('/asset', authApp, assetService.store);
+router.put('/asset/:id', authApp, assetService.update);
+router.delete('/asset/:id', authApp, assetService.destroy);
+router.post('/witel', authApp, witelService.store);
+router.put('/witel/:id', authApp, witelService.update);
+router.delete('/witel/:id', authApp, witelService.destroy);
+router.get('/regional', authApp, regionalService.index);
+router.post('/regional', authApp, regionalService.store);
+router.put('/regional/:id', authApp, regionalService.update);
+router.delete('/regional/:id', authApp, regionalService.destroy);
 
 module.exports = router;

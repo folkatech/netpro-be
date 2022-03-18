@@ -1,15 +1,35 @@
 const db = require('../models');
 const logging = require('../libraries/logging');
 const sequelize = require('sequelize');
+ const Op = require('sequelize').Op;
 
 async function index(req, res) {
     try {
+        let UserModel = db.users;
+        let ProjectModel = db.projects;
         if (req.query.type != 'list') {
             let data = await db.projectsBoard.findAndCountAll({
                 limit: parseInt(req.query.limit),
                 offset: parseInt(req.query.offset),
-                where: { board_id: req.query.board_id },
-                include: db.projects,
+               // attributes : ['project.type'],
+                include: [{
+                    model: ProjectModel,
+                //     where: sequelize.where(
+                //     sequelize.col('role'),
+                //     'IS',
+                //     null
+                // ),
+                    include: {
+                        model: UserModel,
+                        as : 'user'
+                      //  where : {role : 'rdno'}
+                    },
+                }],
+                where: {
+                    board_id: req.query.board_id,
+                //    'type' : 'e'
+                    
+                },
                 order : [
                     [sequelize.col('project.time'), 'DESC']]
             });
