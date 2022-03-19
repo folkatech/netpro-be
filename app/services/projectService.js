@@ -5,29 +5,31 @@ const sequelize = require('sequelize');
 
 async function index(req, res) {
     try {
-        let UserModel = db.users;
-        let ProjectModel = db.projects;
         if (req.query.type != 'list') {
+            
+            if (req.user == 'netar') {
+                whereData = null;    
+            } else {
+                whereData = {
+                    where : { role : req.role }
+                }
+            }
+            console.log(req.user);
             let data = await db.projectsBoard.findAndCountAll({
                 limit: parseInt(req.query.limit),
                 offset: parseInt(req.query.offset),
-               // attributes : ['project.type'],
                 include: [{
-                    model: ProjectModel,
-                //     where: sequelize.where(
-                //     sequelize.col('role'),
-                //     'IS',
-                //     null
-                // ),
+                    model: db.projects,
+                    required : true,
                     include: {
-                        model: UserModel,
-                        as : 'user'
-                      //  where : {role : 'rdno'}
+                        model: db.users,
+                        as: 'user',
+                        whereData,
+                       // where : {role : 'rnso'}
                     },
                 }],
                 where: {
                     board_id: req.query.board_id,
-                //    'type' : 'e'
                     
                 },
                 order : [

@@ -1,7 +1,7 @@
 let moment = require('moment');
 module.exports = (sequelize, Sequelize, DataTypes) =>  {
     const ProjectBoards = sequelize.define(
-        "projectBoard",
+        "project_board",
         {
             id: {
                 type: DataTypes.INTEGER,
