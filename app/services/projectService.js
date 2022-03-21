@@ -7,23 +7,24 @@ async function index(req, res) {
     try {
         if (req.query.type != 'list') {  
             if (req.user.role == 'netar') {
-                whereData = null;    
+                whereClause = null;    
             } else {
-                whereData = {
-                    where : { role : req.user.role }
+                whereClause = {
+                    role: req.user.role
                 }
             }
-            console.log(whereData);
+           // console.log(whereData);
             let data = await db.projectsBoard.findAndCountAll({
                 limit: parseInt(req.query.limit),
                 offset: parseInt(req.query.offset),
                 include: [{
                     model: db.projects,
-                    required : true,
+                    required: true,
                     include: {
                         model: db.users,
                         as: 'user',
-                        whereData,
+                        where : whereClause,
+                       
                     },
                 }],
                 where: {
