@@ -6,14 +6,14 @@ const sequelize = require('sequelize');
 async function index(req, res) {
     try {
         if (req.query.type != 'list') {  
-            if (req.user == 'netar') {
+            if (req.user.role == 'netar') {
                 whereData = null;    
             } else {
                 whereData = {
-                    where : { role : req.role }
+                    where : { role : req.user.role }
                 }
             }
-            console.log(req.user);
+            console.log(whereData);
             let data = await db.projectsBoard.findAndCountAll({
                 limit: parseInt(req.query.limit),
                 offset: parseInt(req.query.offset),
@@ -24,7 +24,6 @@ async function index(req, res) {
                         model: db.users,
                         as: 'user',
                         whereData,
-                       // where : {role : 'rnso'}
                     },
                 }],
                 where: {
