@@ -51,11 +51,6 @@ module.exports = (sequelize, Sequelize, DataTypes) =>  {
                 values: ['needaprove', 'aprove', 'reject'],
                 default : 'needaprove'
             },
-            role_created : {
-                type: DataTypes.ENUM,
-                values: ['pnd', 'rno', 'netar'],
-                default : 'pnd'
-            },
             label: {
                 type : DataTypes.JSON  
             },

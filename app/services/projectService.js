@@ -5,8 +5,7 @@ const sequelize = require('sequelize');
 
 async function index(req, res) {
     try {
-        if (req.query.type != 'list') {
-            
+        if (req.query.type != 'list') {  
             if (req.user == 'netar') {
                 whereData = null;    
             } else {
